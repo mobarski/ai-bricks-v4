@@ -3,7 +3,6 @@ import os
 
 import requests
 
-from .utils.namespace import DictNamespace
 from .config import providers, lookup
 
 # REF: https://github.com/andrewyng/aisuite/blob/main/aisuite/providers/openai_provider.py
@@ -16,19 +15,23 @@ class ApiConnection:
         super().__init__()
         self.model = model
         self.kwargs = kwargs
+        self.recorder = None
 
     def chat(self, messages, /, model=None, **kwargs):
-        request = self.prepare_chat_request(messages, model, **kwargs)
-        request = self.preproc_request(request)
+        ctx = {}
+        request = self.prepare_chat_request(messages, model, ctx, **kwargs)
+        request = self.preproc_request(request, ctx=ctx)
         raw_resp = self.post_request(**request)
         resp = self.parse_response(raw_resp)
-        resp = self.postproc_response(resp, request)
+        resp = self.postproc_response(resp, ctx=ctx)
         return resp
 
     def chat_stream(self, messages, /, model=None, **kwargs):
+        ctx = {}
         kwargs['stream'] = True
-        request = self.prepare_chat_request(messages, model, **kwargs)
-        request = self.preproc_request(request)
+        kwargs['stream_options'] = {"include_usage": True}
+        request = self.prepare_chat_request(messages, model, ctx, **kwargs)
+        request = self.preproc_request(request, ctx=ctx)
         raw_resp = self.post_request(**request)
         for line in raw_resp.iter_lines():
             line = line.decode("utf-8").strip()
@@ -36,13 +39,16 @@ class ApiConnection:
                 break
             if line.startswith("data: {"):
                 raw_data = line[5:]
-                yield self.parse_stream_response(raw_data)
+                chunk = self.parse_stream_response(raw_data)
+                chunk = self.postproc_stream_response(chunk, ctx=ctx)
+                yield chunk
 
     # -------------------------------------------------------------------------
 
-    def prepare_chat_request(self, messages, model=None, **kwargs):
+    def prepare_chat_request(self, messages, model, ctx, **kwargs):
         # TODO: route to other class based on the provider
         model = model or self.model
+        ctx['model'] = model
         provider, model_name = model.split(":", maxsplit=1)
         return self.build_chat_request(messages, model_name, provider, **kwargs)
 
@@ -82,36 +88,47 @@ class ApiConnection:
             **{**self.kwargs, **kwargs}
         }
 
-    def parse_response(self, raw_resp) -> DictNamespace:
+    def parse_response(self, raw_resp) -> dict:
         """parse response from chat completions api call"""
         try:
             resp = raw_resp.json()
         except json.JSONDecodeError:
             raise Exception(f"Failed to parse response: {raw_resp.text}")
-        return DictNamespace(resp)
+        return resp
 
-    def parse_stream_response(self, raw_resp) -> DictNamespace:
-        """parse response from chat completions api call"""
+    def parse_stream_response(self, raw_resp) -> dict:
         try:
             resp = json.loads(raw_resp)
         except json.JSONDecodeError:
-            raise Exception(f"Failed to parse response: {raw_resp.text}")
-        return DictNamespace(resp)
+            raise Exception(f"Failed to parse response: {raw_resp}")
+        return resp
 
     # -------------------------------------------------------------------------
 
-    def preproc_request(self, request):
+    def preproc_request(self, request, ctx):
+        if self.recorder:
+            self.recorder.record_request(request, ctx)
         return request
 
-    def postproc_response(self, response, request=None):
+    def postproc_response(self, response, ctx):
+        if self.recorder:
+            self.recorder.record_response(response, ctx)
+        return response
+
+    def postproc_stream_response(self, response, ctx):
+        if self.recorder:
+            self.recorder.record_stream_response(response, ctx)
         return response
 
 
 if __name__ == "__main__":
+    from .recorder import Recorder
     conn = ApiConnection("openai:gpt-4o")
+    conn.recorder = Recorder("data/recorder.db")
     if True:
         resp = conn.chat([{"role": "user", "content": "Tell me a joke."}])
         print(resp)
+    if True:
         resp = conn.chat([{"role": "user", "content": "Tell me a joke."}], model="xai:grok-beta")
         print(resp)
     if True:
