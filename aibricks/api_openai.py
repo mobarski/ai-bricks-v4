@@ -17,7 +17,7 @@ class ApiConnection:
         self.kwargs = kwargs
         self.recorder = None
 
-    def chat(self, messages, /, model=None, **kwargs):
+    def chat(self, messages, model=None, **kwargs):
         ctx = {}
         request = self.prepare_chat_request(messages, model, ctx, **kwargs)
         request = self.preproc_request(request, ctx=ctx)
@@ -26,7 +26,7 @@ class ApiConnection:
         resp = self.postproc_response(resp, ctx=ctx)
         return resp
 
-    def chat_stream(self, messages, /, model=None, **kwargs):
+    def chat_stream(self, messages, model=None, **kwargs):
         ctx = {}
         kwargs['stream'] = True
         kwargs['stream_options'] = {"include_usage": True}
