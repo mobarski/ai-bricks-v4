@@ -5,11 +5,10 @@ Simple, unified interface to multiple Generative AI providers and local model se
 This project is similar in scope to [aisuite](https://github.com/andrewyng/aisuite), but with the following differences:
 
 - stronger support for local model servers (tabbyAPI, KoboldCpp, LMStudio, Ollama, ...)
+- ability to record requests and responses (sqlite) and generate usage reports from them
 - more pythonic interface (nested dictionaries)
 - configuration driven approach (yaml + jinja2)
-- ability to record requests and responses (sqlite)
 - minimal dependencies (requests, yamja)
-
 
 ## Example
 
