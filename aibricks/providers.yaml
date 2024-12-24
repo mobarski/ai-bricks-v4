@@ -1,0 +1,47 @@
+openai:
+  api_key_env: OPENAI_API_KEY
+  api_base_url: https://api.openai.com/v1
+
+google:
+  api_key_env: GOOGLE_API_KEY
+  api_base_url: https://generativelanguage.googleapis.com/v1beta
+
+openrouter:
+  api_key_env: OPENROUTER_API_KEY
+  api_base_url: https://openrouter.ai/api/v1
+
+tabbyapi:
+  api_key_env: null
+  api_base_url: http://localhost:5001/v1
+
+arliai:
+  api_key_env: ARLIAI_API_KEY
+  api_base_url: https://api.arliai.com/v1
+
+xai:
+  api_key_env: XAI_API_KEY
+  api_base_url: https://api.x.ai/v1
+
+llamacpp:
+  api_key_env: null
+  api_base_url: http://localhost:8080/v1
+
+koboldcpp:
+  api_key_env: null
+  api_base_url: http://localhost:5001/v1
+
+lmstudio:
+  api_key_env: null
+  api_base_url: http://localhost:1234/v1
+
+huggingface:
+  api_key_env: HUGGINGFACE_API_KEY
+  api_base_url: https://api-inference.huggingface.co/models
+
+ollama:
+  api_key_env: null
+  api_base_url: http://localhost:11434/v1
+
+together:
+  api_key_env: TOGETHER_API_KEY
+  api_base_url: https://api.together.xyz/v1
