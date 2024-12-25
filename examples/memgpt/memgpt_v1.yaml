@@ -36,5 +36,6 @@ templates:
     The user will only see responses that are sent through the respond tool!
 
     <MEMORY>
+    {{ memory }}
     </MEMORY>
   
