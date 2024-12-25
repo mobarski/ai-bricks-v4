@@ -2,7 +2,7 @@ import aibricks
 from pathlib import Path
 
 client = aibricks.client(model='xai:grok-beta')
-config = aibricks.load_config(Path(__file__).parent / 'memgpt_v1.yaml')
+config = aibricks.load_config(Path(__file__).with_name('memgpt_v1.yaml'))
 
 memory = ''
 messages = [{'role': 'system', 'content': config.render('system_prompt', memory=memory)}]
