@@ -35,7 +35,8 @@ for model in models:
     print(response['choices'][0]['message']['content'])
 ```
 
-Minimalistic implementation of MemGPT-like agent.
+
+Minimalistic implementation of MemGPT-like agent:
 ```python
 import aibricks
 from pathlib import Path
