@@ -22,7 +22,7 @@ class Client:
 
     def _get_connection(self, model, **kwargs):
         model = model or self.model
-        provider, _ = model.split(":", maxsplit=1)
+        provider, _, _ = model.partition(":")
         api = API_BY_PROVIDER.get(provider, ApiConnection)
         conn = api(model, **kwargs)
         conn.recorder = self.recorder

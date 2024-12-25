@@ -49,7 +49,7 @@ class ApiConnection:
         # TODO: route to other class based on the provider
         model = model or self.model
         ctx['model'] = model
-        provider, model_name = model.split(":", maxsplit=1)
+        provider, _, model_name = model.partition(":")
         return self.build_chat_request(messages, model_name, provider, **kwargs)
 
     def build_chat_request(self, messages, model_name, provider, **kwargs):
