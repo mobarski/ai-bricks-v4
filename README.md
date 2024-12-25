@@ -5,8 +5,8 @@ AI Bricks provide minimalistic toolbox for creating Generative AI based systems.
 Features:
 - unified interface to multiple Generative AI providers
 - strong support for local model servers (KoboldCpp, LMStudio, Ollama, LlamaCpp, tabbyAPI, ...)
-- ability to record requests and responses (sqlite) and generate reports (ie usage)
-- configuration driven approach (yaml + jinja2) to prompt templates
+- ability to record requests and responses (in sqlite) and generate reports (ie usage)
+- configuration driven approach to prompt templates (yaml + jinja2)
 - minimal dependencies (requests, yamja)
 
 AI Bricks focuses on providing basic building blocks rather than a complex framework. This aligns with research showing that [the most successful LLM implementations use simple, composable patterns rather than complex frameworks](https://www.anthropic.com/research/building-effective-agents). By keeping things minimal, it allows developers to build exactly what they need without unnecessary abstractions.
