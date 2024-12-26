@@ -20,7 +20,7 @@ class AnthropicApiConnection(OpenAiApiConnection):
 
 if __name__ == "__main__":
     conn = AnthropicApiConnection("anthropic:claude-3-5-haiku-latest", max_tokens=100)
-    if False:
+    if True:
         resp = conn.chat([{"role": "user", "content": "Tell me a joke."}])
         print(resp)
     if True:
