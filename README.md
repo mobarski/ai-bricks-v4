@@ -96,7 +96,7 @@ This example can be found in the [examples/memgpt](examples/memgpt) directory.
 | **KoboldCpp**  | `koboldcpp`                         | -                        | GGUF  |
 | **LlamaCpp**   | `llamacpp`                          | -                        | GGUF  |
 | **tabbyAPI**   | `tabbyapi`                          | TABBYAPI_API_KEY         | EXL2, GPTQ |
-| dummy          | `dummy`                             | -                        |       |
+| **dummy**      | `dummy`                             | -                        |       |
 
 
 # License
