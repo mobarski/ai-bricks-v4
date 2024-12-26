@@ -90,13 +90,13 @@ This example can be found in the [examples/memgpt](examples/memgpt) directory.
 | **ArliAI**     | `arliai:Llama-3.1-70B-Tulu-2` | ARLIAI_API_KEY           |       |
 | **XAI**        | `xai:grok-beta`               | XAI_API_KEY              |       |
 | **Together**   | `together:meta-llama/Meta-Llama-3-8B-Instruct-Turbo` | TOGETHER_API_KEY |  |
+| **Anthropic**  | `anthropic:claude-3-5-haiku-latest` | ANTHROPIC_API_KEY        |       |
 | **Ollama**     | `ollama:qwen2.5-coder:7b`     | -                        | GGUF  |
 | **LMStudio**   | `lmstudio:qwen2.5-14b-instruct` | -                      | GGUF<br>dynamic model loading |
 | **KoboldCpp**  | `koboldcpp`                   | -                        | GGUF  |
 | **LlamaCpp**   | `llamacpp`                    | -                        | GGUF  |
 | **tabbyAPI**   | `tabbyapi`                    | TABBYAPI_API_KEY         | EXL2, GPTQ |
-| ~~dummy~~      | ~~`dummy`~~                   | -                        |       |
-| ~~Anthropic~~  | ~~`anthropic:claude-3-5-sonnet`~~ | ANTHROPIC_API_KEY |       |
+| dummy          | `dummy`                       | -                        |       |
 
 
 # License

@@ -1,8 +1,13 @@
-from .api_openai import ApiConnection
+from .api_openai import OpenAiApiConnection
+from .api_anthropic import AnthropicApiConnection
+from .api_dummy import DummyApiConnection
 
 
 API_BY_PROVIDER = {
-} # default: ApiConnection
+    'anthropic': AnthropicApiConnection,
+    'dummy': DummyApiConnection,
+}  # default: OpenAiApiConnection
+
 
 class Client:
     def __init__(self, model, **kwargs):
@@ -23,7 +28,7 @@ class Client:
     def _get_connection(self, model, **kwargs):
         model = model or self.model
         provider, _, _ = model.partition(":")
-        api = API_BY_PROVIDER.get(provider, ApiConnection)
+        api = API_BY_PROVIDER.get(provider, OpenAiApiConnection)
         conn = api(model, **kwargs)
         conn.recorder = self.recorder
         return conn

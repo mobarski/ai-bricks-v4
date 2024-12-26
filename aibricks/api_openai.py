@@ -3,13 +3,17 @@ import os
 
 import requests
 
-from .config import providers, lookup
+from .config import providers
 
 # REF: https://github.com/andrewyng/aisuite/blob/main/aisuite/providers/openai_provider.py
 # REF:https://platform.openai.com/docs/api-reference/chat/create
 
 
-class ApiConnection:
+class OpenAiApiConnection:
+    stream_kwargs = {
+        'stream': True,
+        'stream_options': {"include_usage": True},
+    }
 
     def __init__(self, model, **kwargs):
         super().__init__()
@@ -28,15 +32,12 @@ class ApiConnection:
 
     def chat_stream(self, messages, model=None, **kwargs):
         ctx = {}
-        kwargs['stream'] = True
-        kwargs['stream_options'] = {"include_usage": True}
+        kwargs = {**self.stream_kwargs, **kwargs}
         request = self.prepare_chat_request(messages, model, ctx, **kwargs)
         request = self.preproc_request(request, ctx=ctx)
         raw_resp = self.post_request(**request)
         for line in raw_resp.iter_lines():
             line = line.decode("utf-8").strip()
-            if line == "data: [DONE]":
-                break
             if line.startswith("data: {"):
                 raw_data = line[5:]
                 chunk = self.parse_stream_response(raw_data)
@@ -71,11 +72,7 @@ class ApiConnection:
         return api_base_url + "/chat/completions"
 
     def build_headers(self, api_key_env):
-        api_key = "NO-API-KEY-SET"
-        if api_key_env:
-            api_key = os.getenv(api_key_env)
-            if not api_key:
-                raise Exception(f"environment variable {api_key_env} is not set")
+        api_key = self.get_api_key(api_key_env)
         return {
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
@@ -103,6 +100,16 @@ class ApiConnection:
             raise Exception(f"Failed to parse response: {raw_resp}")
         return resp
 
+    def get_api_key(self, api_key_env):
+        """Retrieve API key from environment variable"""
+        if not api_key_env:
+            return "NO-API-KEY-SET"
+
+        api_key = os.getenv(api_key_env)
+        if not api_key:
+            raise Exception(f"environment variable {api_key_env} is not set")
+        return api_key
+
     # -------------------------------------------------------------------------
 
     def preproc_request(self, request, ctx):
@@ -123,7 +130,7 @@ class ApiConnection:
 
 if __name__ == "__main__":
     from .recorder import Recorder
-    conn = ApiConnection("openai:gpt-4o")
+    conn = OpenAiApiConnection("openai:gpt-4o")
     conn.recorder = Recorder("data/recorder.db")
     if True:
         resp = conn.chat([{"role": "user", "content": "Tell me a joke."}])
@@ -133,6 +140,5 @@ if __name__ == "__main__":
         print(resp)
     if True:
         for chunk in conn.chat_stream([{"role": "user", "content": "Tell me a joke."}]):
-            #print(lookup(chunk, 'choices.0.delta.content', ''), end="", flush=True)
             print(chunk)
         print()
