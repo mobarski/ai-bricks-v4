@@ -10,10 +10,6 @@ openrouter:
   api_key_env: OPENROUTER_API_KEY
   api_base_url: https://openrouter.ai/api/v1
 
-tabbyapi:
-  api_key_env: null
-  api_base_url: http://localhost:5001/v1
-
 arliai:
   api_key_env: ARLIAI_API_KEY
   api_base_url: https://api.arliai.com/v1
@@ -21,6 +17,28 @@ arliai:
 xai:
   api_key_env: XAI_API_KEY
   api_base_url: https://api.x.ai/v1
+
+huggingface:
+  api_key_env: HUGGINGFACE_API_KEY
+  api_base_url: https://api-inference.huggingface.co/models
+
+together:
+  api_key_env: TOGETHER_API_KEY
+  api_base_url: https://api.together.xyz/v1
+
+deepseek:
+  api_key_env: DEEPSEEK_API_KEY
+  api_base_url: https://api.deepseek.com/v1
+
+anthropic:
+  api_key_env: ANTHROPIC_API_KEY
+  api_base_url: https://api.anthropic.com/v1
+
+# LOCAL MODELS
+
+tabbyapi:
+  api_key_env: null
+  api_base_url: http://localhost:5001/v1
 
 llamacpp:
   api_key_env: null
@@ -34,21 +52,17 @@ lmstudio:
   api_key_env: null
   api_base_url: http://localhost:1234/v1
 
-huggingface:
-  api_key_env: HUGGINGFACE_API_KEY
-  api_base_url: https://api-inference.huggingface.co/models
-
 ollama:
   api_key_env: null
   api_base_url: http://localhost:11434/v1
 
-together:
-  api_key_env: TOGETHER_API_KEY
-  api_base_url: https://api.together.xyz/v1
+gpt4all:
+  api_key_env: null
+  api_base_url: http://localhost:4891/v1
 
-anthropic:
-  api_key_env: ANTHROPIC_API_KEY
-  api_base_url: https://api.anthropic.com/v1
+vllm:
+  api_key_env: null
+  api_base_url: http://localhost:8000/v1
 
 dummy:
   api_key_env: null

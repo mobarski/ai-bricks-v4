@@ -23,3 +23,5 @@ if __name__ == "__main__":
     db = Recorder("data/recorder.db").db
     for row in db.execute('select response_json from recordings where request_json is null'):
         print(row)
+
+# TODO: combine with the recorder

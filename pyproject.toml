@@ -1,10 +1,15 @@
 [project]
 name = "ai-bricks-v4"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.2.0"
+description = "A minimalistic toolkit for building AI applications and agents, providing unified interface to multiple AI providers"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "requests>=2.32.3",
     "yamja>=0.1.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.0.0",
 ]

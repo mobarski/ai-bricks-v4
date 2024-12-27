@@ -126,19 +126,3 @@ class OpenAiApiConnection:
         if self.recorder:
             self.recorder.record_stream_response(response, ctx)
         return response
-
-
-if __name__ == "__main__":
-    from .recorder import Recorder
-    conn = OpenAiApiConnection("openai:gpt-4o")
-    conn.recorder = Recorder("data/recorder.db")
-    if True:
-        resp = conn.chat([{"role": "user", "content": "Tell me a joke."}])
-        print(resp)
-    if True:
-        resp = conn.chat([{"role": "user", "content": "Tell me a joke."}], model="xai:grok-beta")
-        print(resp)
-    if True:
-        for chunk in conn.chat_stream([{"role": "user", "content": "Tell me a joke."}]):
-            print(chunk)
-        print()
