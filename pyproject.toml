@@ -13,3 +13,10 @@ dependencies = [
 test = [
     "pytest>=8.0.0",
 ]
+examples = [
+    "streamlit>=1.31.0",
+    "rich>=13.7.0",
+]
+
+[tool.setuptools]
+packages = ["aibricks"]
