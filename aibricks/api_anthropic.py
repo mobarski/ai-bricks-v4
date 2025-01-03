@@ -22,7 +22,6 @@ class AnthropicApiConnection(OpenAiApiConnection):
     def normalize_request(self, request, ctx):
         messages = request['data']['messages']
         request['data']['messages'] = [self.normalize_message(msg) for msg in messages]
-        print(request) # XXX
         return request
 
     def normalize_message(self, msg):
