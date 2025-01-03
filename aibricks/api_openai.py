@@ -115,14 +115,28 @@ class OpenAiApiConnection:
     def preproc_request(self, request, ctx):
         if self.recorder:
             self.recorder.record_request(request, ctx)
+        request = self.normalize_request(request, ctx)
         return request
 
     def postproc_response(self, response, ctx):
         if self.recorder:
             self.recorder.record_response(response, ctx)
+        response = self.normalize_response(response, ctx)
         return response
 
     def postproc_stream_response(self, response, ctx):
         if self.recorder:
             self.recorder.record_stream_response(response, ctx)
+        response = self.normalize_stream_response(response, ctx)
+        return response
+
+    # -------------------------------------------------------------------------
+
+    def normalize_request(self, request, ctx):
+        return request
+
+    def normalize_response(self, response, ctx):
+        return response
+
+    def normalize_stream_response(self, response, ctx):
         return response

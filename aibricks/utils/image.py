@@ -1,4 +1,5 @@
 import base64
+import mimetypes
 
 
 def image_as_base64(image_path):
@@ -7,5 +8,5 @@ def image_as_base64(image_path):
 
 
 def image_as_url(image_path):
-    extension = image_path.split(".")[-1]
-    return f"data:image/{extension};base64,{image_as_base64(image_path)}"
+    mime_type = mimetypes.guess_type(image_path)[0] or 'image/jpeg'  # fallback to jpeg if unknown
+    return f"data:{mime_type};base64,{image_as_base64(image_path)}"
