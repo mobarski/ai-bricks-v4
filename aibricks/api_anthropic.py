@@ -38,6 +38,7 @@ class AnthropicApiConnection(OpenAiApiConnection):
                     media_type = meta.split(':')[-1]
                     data = raw_data.split(',')[-1]
                 else:
+                    # TODO: download the image and convert to base64
                     raise NotImplementedError(f"Unsupported image URL: {part['image_url']['url']}")
                 part2 = {
                     'type': 'image',
