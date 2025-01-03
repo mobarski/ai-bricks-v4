@@ -123,7 +123,7 @@ Don't. The project is still in its infancy.
 - [aisuite repo](https://github.com/andrewyng/aisuite)
 - [ai-bricks-v3 repo](https://github.com/mobarski/ai-bricks-v3)
 
-#### API docs
+#### Chat API docs
 - [OpenAI Chat API](https://platform.openai.com/docs/api-reference/chat)
 - [Anthropic Messages API](https://docs.anthropic.com/en/api/messages)
 - [XAI Chat Completion](https://docs.x.ai/docs/api-reference#chat-completions)
@@ -133,6 +133,10 @@ Don't. The project is still in its infancy.
 - [ArliAI Usage Docs](https://www.arliai.com/docs)
 - [Together Chat API](https://docs.together.ai/docs/chat-overview)
 - [HuggingFace API](https://huggingface.co/docs/api-inference/index)
+
+#### Vision API docs
+- [OpenAI Vision API](https://platform.openai.com/docs/guides/vision)
+- [Anthropic Vision API](https://docs.anthropic.com/en/docs/build-with-claude/vision)
 
 #### Local model servers
 - [Ollama](https://ollama.ai/)
