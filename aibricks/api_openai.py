@@ -4,6 +4,7 @@ import os
 import requests
 
 from .config import providers
+from .utils.image import image_as_url
 
 # REF: https://github.com/andrewyng/aisuite/blob/main/aisuite/providers/openai_provider.py
 # REF:https://platform.openai.com/docs/api-reference/chat/create
@@ -133,7 +134,27 @@ class OpenAiApiConnection:
     # -------------------------------------------------------------------------
 
     def normalize_request(self, request, ctx):
+        messages = request['data']['messages']
+        request['data']['messages'] = [self.normalize_message(msg, ctx) for msg in messages]
         return request
+
+    def normalize_message(self, msg, ctx):
+        if isinstance(msg['content'], str):
+            return msg
+        elif isinstance(msg['content'], list):
+            msg['content'] = [self.normalize_content_part(part, ctx) for part in msg['content']]
+        else:
+            raise ValueError(f"Unsupported message content type: {type(msg['content'])}")
+        return msg
+
+    def normalize_content_part(self, part, ctx):
+        if part['type'] == 'image_url':
+            url = part['image_url']['url']
+            if url.startswith('file://') or url.startswith('http'):
+                part['image_url']['url'] = image_as_url(url)
+        return part
+
+    # -------------------------------------------------------------------------
 
     def normalize_response(self, response, ctx):
         return response

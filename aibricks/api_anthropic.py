@@ -1,4 +1,5 @@
 from .api_openai import OpenAiApiConnection
+from .utils.image import image_as_base64, guess_mime_type
 
 
 class AnthropicApiConnection(OpenAiApiConnection):
@@ -19,34 +20,23 @@ class AnthropicApiConnection(OpenAiApiConnection):
 
     # -------------------------------------------------------------------------
 
-    def normalize_request(self, request, ctx):
-        messages = request['data']['messages']
-        request['data']['messages'] = [self.normalize_message(msg) for msg in messages]
-        return request
-
-    def normalize_message(self, msg):
-        if isinstance(msg['content'], str):
-            return msg
-        out = []
-        for part in msg['content']:
-            if part['type'] == 'text':
-                out.append(part)
-            elif part['type'] == 'image_url':
-                if part['image_url']['url'].startswith('data:'):
-                    # example: "data:image/{extension};base64,{image_as_base64}"
-                    meta, raw_data = part['image_url']['url'].split(';')
-                    media_type = meta.split(':')[-1]
-                    data = raw_data.split(',')[-1]
-                else:
-                    # TODO: download the image and convert to base64
-                    raise NotImplementedError(f"Unsupported image URL: {part['image_url']['url']}")
-                part2 = {
-                    'type': 'image',
-                    'source': {
-                        'data': data,
-                        'type': 'base64',
-                        'media_type': media_type,
-                    }
+    def normalize_content_part(self, part, ctx):
+        if part['type'] == 'image_url':
+            url = part['image_url']['url']
+            if url.startswith('file://') or url.startswith('http'):
+                data = image_as_base64(url)
+                media_type = guess_mime_type(url)
+            elif url.startswith('data:'):
+                # example: "data:{media_type};base64,{image_as_base64}"
+                meta, raw_data = url.split(';')
+                media_type = meta.split(':')[-1]
+                data = raw_data.split(',')[-1]
+            return {
+                'type': 'image',
+                'source': {
+                    'data': data,
+                    'type': 'base64',
+                    'media_type': media_type,
                 }
-                out.append(part2)
-        return {'role': msg['role'], 'content': out}
+            }
+        return part
