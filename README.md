@@ -41,13 +41,14 @@ for model in models:
 import aibricks
 client = aibricks.client()
 
-models = ["openai:gpt-4o", "xai:grok-vision-beta", 'anthropic:claude-3-5-sonnet-latest']
+models = ["openai:gpt-4o", "xai:grok-vision-beta", "anthropic:claude-3-5-sonnet-latest"]
 
 messages = [
     {"role": "user", "content": [
         {"type": "text", "text": "what these two images have in common?"},
-        {"type": "image_url", "image_url": {"url": "https://example.com/image1.jpg"}},
-        {"type": "image_url", "image_url": {"url": "file://path/to/image2.jpg", "detail": "high"}},
+        {"type": "image_url", "image_url": {"url": "https://example.com/image1.jpg", "detail": "high"}},
+        {"type": "image_url", "image_url": {"url": "file://path/to/image2.jpg",
+                                            "detail": "high"}},
     ]},
 ]
 
