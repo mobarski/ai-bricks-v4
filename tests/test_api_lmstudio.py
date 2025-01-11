@@ -1,6 +1,6 @@
 from . import common
 
-TEST_MODEL = "dummy:xxx"
+TEST_MODEL = "lmstudio"
 
 
 def test_local_chat():
@@ -24,5 +24,3 @@ if __name__ == "__main__":
     test_local_chat_stream()
     test_local_chat_logprobs()
     test_local_chat_top_logprobs()
-
-# TODO: FIX ERRORS
