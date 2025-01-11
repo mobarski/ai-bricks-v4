@@ -41,7 +41,12 @@ for model in models:
 import aibricks
 client = aibricks.client()
 
-models = ["openai:gpt-4o", "xai:grok-vision-beta", "anthropic:claude-3-5-sonnet-latest"]
+models = [
+    "openai:gpt-4o",
+    "xai:grok-vision-beta",
+    "anthropic:claude-3-5-sonnet-latest",
+    "lmstudio:moondream2",
+]
 
 messages = [
     {"role": "user", "content": [

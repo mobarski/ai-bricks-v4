@@ -1,6 +1,6 @@
 [project]
 name = "ai-bricks-v4"
-version = "0.2.0"
+version = "0.2.1"
 description = "A minimalistic toolkit for building AI applications and agents, providing unified interface to multiple AI providers"
 readme = "README.md"
 requires-python = ">=3.12"
