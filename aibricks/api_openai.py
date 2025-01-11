@@ -43,7 +43,8 @@ class OpenAiApiConnection:
                 raw_data = line[5:]
                 chunk = self.parse_stream_response(raw_data)
                 chunk = self.postproc_stream_response(chunk, ctx=ctx)
-                yield chunk
+                if chunk:
+                    yield chunk
 
     # -------------------------------------------------------------------------
 
