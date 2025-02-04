@@ -1,6 +1,8 @@
 import base64
 import mimetypes
 from functools import lru_cache
+from PIL import Image
+import io
 
 import requests
 
@@ -12,21 +14,29 @@ def _download_image(url):
     return resp.content
 
 
-def image_as_base64(image_path):
-    if image_path.startswith('http'):
-        content = _download_image(image_path)
+def image_as_base64(image_or_path):
+    # Handle PIL Image objects
+    if isinstance(image_or_path, Image.Image):
+        buffer = io.BytesIO()
+        image_or_path.save(buffer, format='PNG')
+        return base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+    if image_or_path.startswith('http'):
+        content = _download_image(image_or_path)
         return base64.b64encode(content).decode("utf-8")
-    if image_path.startswith('file://'):
-        image_path = image_path[7:]
-    with open(image_path, "rb") as image_file:
+    if image_or_path.startswith('file://'):
+        image_or_path = image_or_path[7:]
+    with open(image_or_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode("utf-8")
 
 
-def image_as_url(image_path):
-    if image_path.startswith('file://'):
-        image_path = image_path[7:]
-    mime_type = mimetypes.guess_type(image_path)[0] or 'image/jpeg'  # fallback to jpeg if unknown
-    return f"data:{mime_type};base64,{image_as_base64(image_path)}"
+def image_as_url(image_or_path):
+    if isinstance(image_or_path, Image.Image):
+        return f"data:image/png;base64,{image_as_base64(image_or_path)}"
+    if image_or_path.startswith('file://'):
+        image_or_path = image_or_path[7:]
+    mime_type = mimetypes.guess_type(image_or_path)[0] or 'image/jpeg'  # fallback to jpeg if unknown
+    return f"data:{mime_type};base64,{image_as_base64(image_or_path)}"
 
 
 def guess_mime_type(url_or_path):

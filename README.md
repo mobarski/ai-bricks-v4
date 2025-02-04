@@ -89,6 +89,7 @@ This example can be found in the [examples/memgpt](examples/memgpt) directory.
 | **tabbyAPI**   | `tabbyapi`                          | TABBYAPI_API_KEY         | EXL2, GPTQ |
 | **GPT4All**    | `gpt4all:Reasoner v1`               | -                        | GGUF<br>buggy |
 | **vLLM**       | `vllm:/opt/models/qwen2.5-coder-3b-instruct-q4_0.gguf` | - | GGUF |
+| **TGI**        | `tgi`                               | -                        | 🚧🚧🚧 |
 | **dummy**      | `dummy`                             | -                        |        |
 
 

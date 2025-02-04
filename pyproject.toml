@@ -7,6 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "requests>=2.32.3",
     "yamja>=0.1.0",
+    "pillow>=11.0.0",
 ]
 
 [project.optional-dependencies]
@@ -16,6 +17,8 @@ test = [
 examples = [
     "streamlit>=1.31.0",
     "rich>=13.7.0",
+    #"pyautogui>=0.9.54",
+    "mss>=10.0.0",
 ]
 
 [tool.setuptools]
