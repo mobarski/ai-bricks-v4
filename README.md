@@ -50,10 +50,11 @@ models = [
 
 messages = [
     {"role": "user", "content": [
-        {"type": "text", "text": "what these two images have in common?"},
+        {"type": "text", "text": "what these images have in common?"},
         {"type": "image_url", "image_url": {"url": "https://example.com/image1.jpg"}},
         {"type": "image_url", "image_url": {"url": "file://path/to/image2.jpg",
                                             "detail": "high"}},
+        {"type": "image", "image": pil_image},
     ]},
 ]
 
@@ -127,6 +128,9 @@ Don't. The project is still in its infancy.
 #### Vision API docs
 - [OpenAI Vision API](https://platform.openai.com/docs/guides/vision)
 - [Anthropic Vision API](https://docs.anthropic.com/en/docs/build-with-claude/vision)
+
+#### UI Automation
+- [UI-TARS](https://github.com/bytedance/UI-TARS)
 
 #### Local model servers
 - [Ollama](https://ollama.ai/)
