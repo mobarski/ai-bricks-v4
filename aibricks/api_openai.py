@@ -154,8 +154,8 @@ class OpenAiApiConnection:
             if url.startswith('file://') or url.startswith('http'):
                 part['image_url']['url'] = image_as_url(url)
         elif part['type'] == 'image':
-            part['type'] = 'image_url'
             image = part.pop('image')
+            part['type'] = 'image_url'
             part['image_url'] = {'url': image_as_url(image)}
         return part
 
